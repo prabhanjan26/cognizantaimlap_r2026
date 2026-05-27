@@ -1,6 +1,7 @@
 #create api gateway app
 from ensurepip import version
-
+import httpx
+from itertools import cycle
 from fastapi import FastAPI
 import consul
 from gatewayapp.configurations.config import CONSUL_HOST, CONSUL_PORT
@@ -17,7 +18,7 @@ consul_client = consul.Consul(host=CONSUL_HOST,
 LOAD_BALANCERS = {}
 #routing table
 ROUTING_TABLE = {
-    ("POST", "orders"): "order-service",
+    ("POST", "payments"): "payment-service",
     ("GET", "payments"): "payment-service"
 }
 #create routing engine function
@@ -34,6 +35,7 @@ def route_engine(method: str, resource: str):
         )
 
      return ROUTING_TABLE[route_key]
+
 def get_service_instance(service_name: str):
     index, services = consul_client.health.service(
         service=service_name,
