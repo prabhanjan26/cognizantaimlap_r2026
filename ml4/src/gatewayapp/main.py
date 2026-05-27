@@ -5,6 +5,8 @@ from fastapi import FastAPI
 import consul
 from gatewayapp.configurations.config import CONSUL_HOST, CONSUL_PORT
 from fastapi import HTTPException
+from fastapi import Request, Response
+
 #create api gateway app
 app = FastAPI(title="API Gateway", description="API Gateway for microservices", version="1.0.0")
 #create consul client
@@ -20,8 +22,7 @@ ROUTING_TABLE = {
 }
 #create routing engine function
 def route_engine(method: str, resource: str):
-     route_key = (
-        
+     route_key = (        
         method.upper().strip(),
         resource.lower().strip()
     )
@@ -33,5 +34,77 @@ def route_engine(method: str, resource: str):
         )
 
      return ROUTING_TABLE[route_key]
+def get_service_instance(service_name: str):
+    index, services = consul_client.health.service(
+        service=service_name,
+        passing=True
+    )
+
+    instances = []
+
+    for item in services:
+        service = item["Service"]
+        address = service["Address"]
+        port = service["Port"]
+
+        instances.append(f"http://{address}:{port}")
+
+    if not instances:
+        raise HTTPException(
+            status_code=503,
+            detail=f"No healthy instances found for {service_name}"
+        )
+
+    current_instances = LOAD_BALANCERS.get(service_name, {}).get("instances")
+
+    if current_instances != instances:
+        LOAD_BALANCERS[service_name] = {
+            "instances": instances,
+            "cycle": cycle(instances)
+        }
+
+    return next(LOAD_BALANCERS[service_name]["cycle"])
+
+
+async def forward_request(
+    service_url: str,
+    resource: str,
+    product_id: int,
+    request: Request
+):
+    target_url = f"{service_url}/{resource}/{product_id}"
+
+    async with httpx.AsyncClient() as client:
+        response = await client.request(
+            method=request.method,
+            url=target_url,
+            params=request.query_params,
+            content=await request.body()
+        )
+
+    return Response(
+        content=response.content,
+        status_code=response.status_code,
+        media_type=response.headers.get("content-type")
+    )
+
+
+@app.get("/")
+def home():
+    return {
+        "message": "API Gateway running",
+        "features": [
+            
+            "Routing engine abstraction",
+            "Round-robin load balancing"
+        ],
+        "routes": {
+            "create_payment": "POST /api/payments/{order_id}",
+            "check_payments": "GET /api/payments}"
+        }
+    }
+
+
+
 
 
