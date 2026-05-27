@@ -107,6 +107,21 @@ def home():
     }
 
 
+@app.post("/api/{version}/payment/{order_id}")
+async def create_payment_gateway(
+    version: str,
+    order_id: int,
+    request: Request
+):
+    service_name = route_engine("POST", "payments")
+    service_url = get_service_instance(service_name)
+
+    return await forward_request(
+        service_url=service_url,
+        resource="payments",
+        product_id=order_id,
+        request=request
+    )
 
 
 
