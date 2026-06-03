@@ -3,14 +3,14 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression   
 from sklearn.metrics import mean_squared_error, r2_score
-from src.supervisedmlapp.configurations.conf import HOUSE_FILE_PATH
-
+from supervisedmlapp.configurations.conf import HOUSE_FILE_PATH
+import matplotlib.pyplot as plt
 def linear_regression_model():
     # Load the dataset
     data = pd.read_csv(HOUSE_FILE_PATH)
     
     # Define features and target variable
-    X = data.drop('Price', axis=1)  # Features
+    X = data[['Area']] # Features
     y = data['Price']  # Target variable
     
     # Split the dataset into training and testing sets
@@ -26,7 +26,7 @@ def linear_regression_model():
     y_pred = model.predict(X_test)
     
     # Evaluate the model
-    mse = mean_squared_error(y_test, y_pred)
+    mse = mean_squared_error(y_test, y_pred)**0.5
     r2 = r2_score(y_test, y_pred)
     
     print(f'Mean Squared Error: {mse}')
@@ -36,6 +36,15 @@ def linear_regression_model():
     print(f'Coefficients: {model.coef_}')
     #print the intercept of the model
     print(f'Intercept: {model.intercept_}')
+
+    #plot the regression line
+    plt.scatter(X_test, y_test, color='blue', label='Actual')
+    plt.plot(X_test, y_pred, color='red', label='Predicted')
+    plt.xlabel('Bedrooms')
+    plt.ylabel('Price')
+    plt.title('Linear Regression: Bedrooms vs Price')
+    plt.legend()
+    plt.show()
     
     return model
 
