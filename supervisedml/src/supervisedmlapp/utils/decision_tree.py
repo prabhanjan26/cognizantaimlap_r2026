@@ -40,7 +40,7 @@ def create_decision_tree_model():
     #draw the decision tree with all the features and class names
     
     plt.figure(figsize=(10,10))
-    plot_tree(model, feature_names=X.columns, class_names=['Not Approved', 'Approved'], filled=True)
+    plot_tree(model, feature_names=X.columns, class_names=['Approved', 'Not Approved'], filled=True)
     plt.show()
 
 if __name__ == "__main__":
