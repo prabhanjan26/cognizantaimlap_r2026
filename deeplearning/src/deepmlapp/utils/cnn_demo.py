@@ -93,3 +93,22 @@ plt.title("After Max Pooling")
 plt.axis('off')
 plt.savefig('after_max_pooling.png')
 plt.show()
+
+#apply Flattening to convert the 2D feature maps into a 1D vector for further processing in fully connected layers.
+flatten_layer = tf.keras.layers.Flatten()
+flatten_output = flatten_layer(pool_output)
+
+print("After Flatten Shape:", flatten_output.shape)
+
+print("First 20 Flattened Values:")
+print(flatten_output.numpy()[0][:20])
+
+#add fully connected layer to learn complex patterns from the extracted features.
+dense_layer = tf.keras.layers.Dense(
+    units=64,         
+    activation='relu' 
+)
+
+dense_output = dense_layer(flatten_output)
+
+print("After Fully Connected Layer Shape:", dense_output.shape)
