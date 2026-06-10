@@ -15,6 +15,7 @@ x_train, x_test = x_train / 255.0, x_test / 255.0
 model = keras.Sequential([
     layers.Flatten(input_shape=(28, 28)),
     layers.Dense(128, activation='relu'),
+    #neurons in the hidden layer dropped out randomly during training to prevent overfitting
     layers.Dropout(0.2),
     layers.Dense(10, activation='softmax')
 ])
@@ -22,5 +23,21 @@ model = keras.Sequential([
 model.compile(optimizer='adam',
                 loss='sparse_categorical_crossentropy',
                 metrics=['accuracy'])
+
+#define callbacks for early stopping and model checkpointing
+early_stopping = keras.callbacks.EarlyStopping(monitor='accuracy', patience=3, mode='max', restore_best_weights=True)
+model_checkpoint = keras.callbacks.ModelCheckpoint('best_model.h5', monitor='accuracy', save_best_only=True, mode='max')
+
+#add callbacks to the training process
+model.fit(x_train, y_train, epochs=20, 
+          callbacks=[early_stopping, model_checkpoint],
+          batch_size=64,
+          validation_data=(x_test, y_test),
+          stratify=y_train,
+          random_state=42
+          )
+#evaluate the model on the test set
+test_loss, test_acc = model.evaluate(x_test, y_test, verbose=2)
+print('\nTest accuracy:', test_acc)
 
 
