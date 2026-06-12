@@ -3,11 +3,15 @@
 import os
 import re
 from dotenv import load_dotenv
+import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from bs4 import BeautifulSoup
 import requests
-
+nltk.download("punkt")
+nltk.download("punkt_tab")
+nltk.download("stopwords")
+nltk.download("wordnet")
 env_path = os.path.join(os.path.dirname(__file__), '..', '.env')
 load_dotenv(dotenv_path=env_path)
 
@@ -48,6 +52,7 @@ if __name__ == "__main__":
         tokens = word_tokenize(cleaned_text)
         #count the number of tokens
         print(f"Number of tokens: {len(tokens)}")
+        print(f"Tokens: {tokens}")
 
     except Exception as e:
         print(str(e))
