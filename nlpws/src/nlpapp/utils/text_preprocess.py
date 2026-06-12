@@ -8,6 +8,7 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from bs4 import BeautifulSoup
 import requests
+
   
 nltk.download("punkt")
 nltk.download("punkt_tab")
@@ -17,6 +18,7 @@ env_path = os.path.join(os.path.dirname(__file__), '..', '.env')
 load_dotenv(dotenv_path=env_path)
 
 scrape_url = os.getenv("scrape_url")
+language = os.getenv("language")
 
 #create the headers 
 headers = {
@@ -44,7 +46,7 @@ def create_tokens(text):
     return tokens
 
 def stopword_removal(tokens):
-    stop_words = set(stopwords.words('english'))
+    stop_words = set(stopwords.words(language))
     filtered_tokens = [token for token in tokens if token not in stop_words]
     return filtered_tokens
 
