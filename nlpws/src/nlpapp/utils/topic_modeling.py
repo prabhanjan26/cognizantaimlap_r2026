@@ -33,14 +33,15 @@ def topic_modeling(lyrics):
     #classify the lyrics into topics
     vectorizer = CountVectorizer(
     stop_words='english',
-    max_df=0.95,
-    min_df=2
-    )
+    min_df=1,
+    max_df=1.0
+   )
+
 
     X = vectorizer.fit_transform([lyrics])
 
     lda = LatentDirichletAllocation(
-        n_components=5,
+        n_components=3,
         random_state=42
     )
 

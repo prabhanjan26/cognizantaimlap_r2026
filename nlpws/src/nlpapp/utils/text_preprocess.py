@@ -22,7 +22,7 @@ nltk.download("wordnet")
 env_path = os.path.join(os.path.dirname(__file__), '..', '.env')
 load_dotenv(dotenv_path=env_path)
 
-scrape_url = os.getenv("scrape_url")
+scrape_url = os.getenv("quotes_url")
 language = os.getenv("language")
 
 #create the headers 
