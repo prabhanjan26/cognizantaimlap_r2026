@@ -17,6 +17,8 @@ transformers
 torch
 stanford-corenlp
 bertopic
+anthropic
+openai
 
 [dev]
 pytest>=8.2

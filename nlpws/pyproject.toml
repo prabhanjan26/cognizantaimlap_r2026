@@ -37,7 +37,9 @@ dependencies = [
      "transformers",
      "torch",
      "stanford-corenlp",
-     "bertopic"
+     "bertopic",
+     "anthropic",
+     "openai"
      
     
 ]
