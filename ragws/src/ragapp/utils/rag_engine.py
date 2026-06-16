@@ -10,5 +10,7 @@ load_dotenv(env_path)
 
 def load_data_from_vector_db():
     persistent_directory = os.getenv("persist_directory")
+    if not persistent_directory:
+        raise ValueError("persist_directory is not set in the environment variables.")
     #read embeddings from persistent directory
     embeddings= HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
