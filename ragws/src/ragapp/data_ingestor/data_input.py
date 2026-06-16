@@ -46,11 +46,14 @@ if __name__ == "__main__":
 
     embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
     #chroma store
-    vector_store = Chroma(persist_directory="src/ragapp/data", embedding_function=embedding_model)  
+    persist_directory="src/ragapp/data"
+    vector_store = Chroma(persist_directory=persist_directory, embedding_function=embedding_model)  
 
     embeddings = create_embeddings(chunks, embedding_model)
     store_vector_store(chunks, embeddings, vector_store)
     vector_store.persist()
     #check data stored
     print("Data stored successfully in Chroma vector store.")
-    
+    print(f"Documents ingested and stored in vector database at {persist_directory}")
+    print(f"Total number of chunks: {len(chunks)}")
+
