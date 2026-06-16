@@ -36,8 +36,7 @@ def create_embeddings(chunks, embedding_model):
     embeddings = embedding_model.embed_documents([chunk.page_content for chunk in chunks])
     return embeddings
 
-def store_vector_store(chunks, embeddings, vector_store):
-    vector_store.add_documents(chunks, embeddings)
+
 
 if __name__ == "__main__":
     data_dir = os.getenv('data_dir')
@@ -46,11 +45,11 @@ if __name__ == "__main__":
 
     embedding_model = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
     #chroma store
-    persist_directory="src/ragapp/vectordatabase"
-    vector_store = Chroma(persist_directory=persist_directory, embedding_function=embedding_model)  
+    persist_directory="src/ragapp/vectordatabase"    
 
     embeddings = create_embeddings(chunks, embedding_model)
-    store_vector_store(chunks, embeddings, vector_store)
+    vector_store = Chroma.from_documents(chunks, embedding_model, persist_directory=persist_directory)  
+    
     vector_store.persist()
     #check data stored
     print("Data stored successfully in Chroma vector store.")
