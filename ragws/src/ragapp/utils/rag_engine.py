@@ -41,7 +41,7 @@ def load_llm(retriever):
 
     return rag_chain
 
-def prompt_query(question:str):
+def receive_prompt(question:str):
     #read the prompt
     retriever = load_data_from_vector_db()
     ragchain= load_llm(retriever)
