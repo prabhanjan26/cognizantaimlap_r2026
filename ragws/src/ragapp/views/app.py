@@ -19,8 +19,29 @@ st.set_page_config(
 st.markdown(
     """
     <style>
+    /* Entire page */
     .stApp {
-        background: radial-gradient(circle, lightblue, lightgreen, lightyellow, lightpink, lightcoral);
+        background: linear-gradient(
+            135deg,
+            #ff9a9e 0%,
+            #fad0c4 25%,
+            #a8e6a1 50%,
+            #dcedc1 75%,
+            #ff9a9e 100%
+        );
+        background-size: cover;
+        min-height: 100vh;
+    }
+
+    /* Remove default top padding */
+    .block-container {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+
+    /* Optional: transparent main content */
+    [data-testid="stAppViewContainer"] {
+        background: transparent;
     }
     
     .stTitle{
