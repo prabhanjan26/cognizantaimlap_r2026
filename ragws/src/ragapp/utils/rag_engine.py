@@ -44,10 +44,8 @@ def load_llm(retriever):
 
     Rules:
     - Use only the provided context.
-    - Keep answer under 2 sentences.
-    - Return only the final answer.
     - If not found say:
-    "Information not found in Food Delivery Policy."
+    "I am sorry, I could not find any information regarding your query in the Food Delivery Policy."
 
     Context:
     {context}

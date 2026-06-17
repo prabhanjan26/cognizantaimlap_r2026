@@ -3,10 +3,10 @@ import streamlit as st
 import requests
 import os
 from dotenv import load_dotenv
-env_path=os.path.join(os.path.dirname(__file__), '..','/.env')
+env_path=os.path.join(os.path.dirname(__file__), '..','.env')
 load_dotenv(env_path)
 API_URL = os.getenv("api_url")
-
+print(f"API_URL: {API_URL}")
 st.set_page_config(
     page_title="Food Delivery Policy Assistant",
     page_icon="🍔",
