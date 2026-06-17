@@ -19,29 +19,32 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    /* Entire page */
+    /* Remove Streamlit top white header */
+    [data-testid="stHeader"] {
+        background: transparent;
+        height: 0rem;
+    }
+
+    /* Hide toolbar/deploy/menu */
+    [data-testid="stToolbar"] {
+        display: none;
+    }
+
+    /* Full page background */
     .stApp {
         background: linear-gradient(
-            135deg,
+            120deg,
             #ff9a9e 0%,
             #fad0c4 25%,
-            #a8e6a1 50%,
-            #dcedc1 75%,
-            #ff9a9e 100%
+            #a8e6a1 60%,
+            #dcedc1 100%
         );
-        background-size: cover;
         min-height: 100vh;
     }
 
-    /* Remove default top padding */
+    /* Remove top spacing */
     .block-container {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-    }
-
-    /* Optional: transparent main content */
-    [data-testid="stAppViewContainer"] {
-        background: transparent;
+        padding-top: 1rem;
     }
     
     .stTitle{
@@ -77,6 +80,13 @@ st.markdown(
         font-weight: bold;
         text-align: center;
     }
+    .stTextBox{
+         display: flex; 
+         justify-content: center; 
+         margin-top: 20px;
+         border-radius: 20px;
+         background: rgba(255, 255, 255, 0.8); /*
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -97,7 +107,7 @@ st.markdown(
 #create input text box for user question
 st.markdown(
     """
-    <div style="display: flex; justify-content: center; margin-top: 20px;">
+    <div class="stTextBox">
         <input type="text" id="question_input" placeholder="Ask a question about the Food Delivery Policy..." style="width: 50%; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
     </div>
     """,
