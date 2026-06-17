@@ -16,6 +16,7 @@ st.set_page_config(
 #title color should be radial gradient from red to orange
 #background color for the page multicolor radial gradient from light blue to dark blue
 #apply main page css class to the whole page
+#center the text box with rounded corners and light background color
 st.markdown(
     """
     <style>
@@ -81,11 +82,22 @@ st.markdown(
         text-align: center;
     }
     .stTextBox{
-         display: flex; 
-         justify-content: center; 
-         margin-top: 20px;
+         display: block;
+         margin: 20px auto 0;
          border-radius: 20px;
-         background: rgba(255, 255, 255, 0.8); /*
+         background: rgba(255, 255, 255, 0.8);
+         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .stButton{
+        display: block;
+        margin: 20px auto 0;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        background-color: blue;
+        color: white;
+        border: none;
+        cursor: pointer;
     }
     </style>
     """,
@@ -107,10 +119,37 @@ st.markdown(
 #create input text box for user question
 st.markdown(
     """
-    <div class="stTextBox">
-        <input type="text" id="question_input" placeholder="Ask a question about the Food Delivery Policy..." style="width: 50%; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
-    </div>
+    <input class="stTextBox" type="text" id="question_input" placeholder="Ask a question about the Food Delivery Policy..." style="width: 50%; padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc;">
+   
     """,
     unsafe_allow_html=True
 )
 
+#add a button to submit the question
+st.markdown(
+    """
+    <button class="stButton" id="submit_button">
+    Ask
+    </button>
+    """,
+    unsafe_allow_html=True
+)
+
+#read text box content and send it rag engine when button is clicked
+#use java script to read the text box content and send it to python function
+st.markdown(
+    """
+    <script>
+    const submitButton = document.getElementById('submit_button');
+    submitButton.addEventListener('click', () => {
+        const questionInput = document.getElementById('question_input');
+        const question = questionInput.value;
+        if (question) {
+            // Send the question to Streamlit
+            alert("Question submitted: " + question);
+        }
+    });
+    </script>
+    """,
+    unsafe_allow_html=True
+)
