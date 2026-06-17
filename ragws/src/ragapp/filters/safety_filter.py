@@ -3,11 +3,11 @@ from better_profanity import profanity
 profanity.load_censor_words()
 
 BLOCKED_TOPICS = [
-    "salary of other employee",
+    "caller id",
     "personal phone number",
     "home address",
     "bank account",
-    "medical record",
+    "pin",
     "password",
     "confidential"
 ]
@@ -29,10 +29,10 @@ def output_safety_check(answer: str):
     blocked_patterns = [
         "password",
         "bank account",
+        "pin",
         "aadhaar",
         "pan number",
-        "medical record",
-        "personal phone"
+         "personal phone"
     ]
 
     ans = answer.lower()

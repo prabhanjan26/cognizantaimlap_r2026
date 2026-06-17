@@ -9,6 +9,9 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import PromptTemplate
 from langchain_classic.chains import RetrievalQA
+
+from ragapp.filters.gaurdrails import mask_pii, validate_input, validate_output
+from ragapp.filters.safety_filter import input_safety_check, output_safety_check
 env_path= os.path.join(os.path.dirname(__file__), '..','.env')
 load_dotenv(env_path)
 
@@ -66,14 +69,26 @@ def load_llm(retriever):
     return rag_chain
 
 def receive_prompt(question:str):
+   #safety check for input question
+
+    status, message = input_safety_check(question)
+    if not status:
+        return {"answer": message}
+    
+    status,message= validate_input(question)
+    if not status:
+        return {"answer": message}
     #read the prompt
     retriever = load_data_from_vector_db()
     ragchain= load_llm(retriever)
     answer= ragchain.invoke({
         "query": question
     })
+
+    answer_text = output_safety_check(answer['result'])
+    answer_text=validate_output(answer_text)
     return {
-        "answer": answer['result']
+        "answer": mask_pii(answer_text)
         
        
     }
