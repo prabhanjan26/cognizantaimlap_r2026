@@ -242,10 +242,10 @@ def email_order_confirmation(customer_data) -> str:
 def extract_search_text(location: str) -> str:
     text = location.strip()
 
-    text = re.sub(r"dental clinics near\s+", "", text, flags=re.IGNORECASE)
-    text = re.sub(r"dental clinics in\s+", "", text, flags=re.IGNORECASE)
-    text = re.sub(r"dentists near\s+", "", text, flags=re.IGNORECASE)
-    text = re.sub(r"dentists in\s+", "", text, flags=re.IGNORECASE)
+    text = re.sub(r"restaurants near\s+", "", text, flags=re.IGNORECASE)
+    text = re.sub(r"restaurants in\s+", "", text, flags=re.IGNORECASE)
+    text = re.sub(r"restaurants near to me\s+", "", text, flags=re.IGNORECASE)
+  
 
     return text.strip()
 
@@ -258,9 +258,9 @@ def delivery_place_search(location: str) -> str:
         city = extract_search_text(location)
 
         if not city:
-            return "Please provide a city. Example: dental clinics near Chennai"
+            return "Please provide a city. Example: restaurants near Chennai"
 
-        search_query = f"dental clinic {city}"
+        search_query = f"restaurant {city}"
 
         url = (
             "https://api.tomtom.com/search/2/search/"
@@ -282,16 +282,16 @@ def delivery_place_search(location: str) -> str:
         results = data.get("results", [])
 
         if not results:
-            return f"No dental clinics found near {city}."
+            return f"No restaurants found near {city}."
 
-        output = f"✅ Dental clinics found near {city}:\n\n"
+        output = f"✅ Restaurants found near {city}:\n\n"
 
         for item in results:
             poi = item.get("poi", {})
             address = item.get("address", {})
             position = item.get("position", {})
 
-            name = poi.get("name", "Unnamed dental clinic")
+            name = poi.get("name", "Unnamed restaurant")
             phone = poi.get("phone", "Not available")
             category = ", ".join(poi.get("categories", []))
 
@@ -363,12 +363,12 @@ tools = [
             name="TomTomPlaceSearch",
     func=delivery_place_search,
     description="""
-        Search dental clinics or nearby places using TomTom Maps API.
+        Search restaurants or nearby places using TomTom Maps API.
 
         Input examples:
-        dental clinics near Chennai
-        dental clinics in Kochi
-        dentists near Trivandrum
+        restaurants near Chennai
+        restaurants in Kochi
+        restaurants near Trivandrum
         """
         )
         ]
