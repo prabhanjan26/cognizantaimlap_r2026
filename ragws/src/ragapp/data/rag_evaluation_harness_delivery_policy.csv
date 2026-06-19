@@ -1,0 +1,34 @@
+﻿question,expected_answer
+What is the purpose of the Food Delivery App Customer Support Policy?,"The purpose is to define how customer issues, complaints, inquiries, and feedback are handled, with the objective of providing timely, professional, and effective assistance to customers, restaurant partners, and delivery personnel."
+Which support channels are available to customers?,"Customers can contact support through in-app chat support, email support, Help Center/FAQ, contact form, and phone support if available."
+What is the availability of in-app chat support?,In-app chat support is available 24/7.
+What is the availability of email support?,Email support is available 24/7.
+When is phone support available?,Phone support is available during business hours.
+What is the response time for a critical issue?,"Critical issues, such as payment deducted but order not placed, should receive a response within 1 hour."
+What is the response time for a high-priority issue?,"High-priority issues, such as order not delivered, should receive a response within 2 hours."
+What is the response time for a medium-priority issue?,"Medium-priority issues, such as wrong item received, should receive a response within 24 hours."
+What is the response time for a low-priority issue?,"Low-priority issues, such as general inquiries, should receive a response within 48 hours."
+What steps should support take when an order is not delivered?,"Support should verify the order status, contact the delivery partner, provide a delivery update, and issue a refund if required."
+What must customers do when a wrong item is delivered?,Customers should report the issue within 24 hours and upload supporting photos.
+What resolution options are available for a wrong item delivered?,"Resolution options include refund, replacement, or store credit."
+How does support handle missing items?,"Support verifies restaurant order details, investigates delivery records, and processes a partial refund when applicable."
+What payment support issues are covered?,"Payment support covers payment failure, duplicate payment, refund status, and wallet balance issues."
+What is the refund timeline for credit card payments?,Credit card refunds take 5–10 business days.
+What is the refund timeline for debit card payments?,Debit card refunds take 5–10 business days.
+What is the refund timeline for UPI payments?,UPI refunds take 1–5 business days.
+What is the refund timeline for wallet payments?,Wallet refunds take 24 hours.
+When can customers cancel an order?,Customers may cancel orders before restaurant preparation begins.
+What happens if a restaurant cancels an order?,"A full refund will be initiated, and promotional credits may be issued."
+What happens before delivery partner cancellation?,An alternative delivery assignment will be attempted before cancellation.
+For which cases may refunds be approved?,"Refunds may be approved for non-delivery, incorrect order, damaged food, duplicate payment, and technical system failures."
+Within how many hours must refund requests be submitted?,Refund requests must be submitted within 48 hours of the order.
+What behavior is expected from customers?,"Customers are expected to provide accurate information, communicate respectfully, avoid fraudulent refund claims, and refrain from abusive language toward support agents."
+What may happen if a customer violates conduct rules?,"Violation may result in a warning, temporary suspension, or permanent account termination."
+What are the escalation levels in the support process?,"The escalation levels are Level 1 Customer Support Agent, Level 2 Senior Support Specialist, Level 3 Customer Experience Manager, and Level 4 Compliance & Legal Team."
+Within how many hours are escalated cases reviewed?,Escalated cases are reviewed within 72 hours.
+How is customer information handled for data privacy?,Customer information is handled according to applicable data protection laws and the company privacy policy. Support agents access only the information required to resolve customer issues.
+What types of feedback can customers submit?,"Customers may submit app feedback, restaurant feedback, delivery partner feedback, and service quality suggestions."
+What customer support email is listed in the policy?,The listed customer support email is support@fooddeliveryapp.com.
+What Help Center address is listed in the policy?,The listed Help Center address is help.fooddeliveryapp.com.
+Which services are recommended for the Food Delivery App architecture?,"The recommended services are User Service, Order Service, Restaurant Service, Delivery Service, Payment Service, Notification Service, Customer Support Service, AI Chatbot Service, and Analytics Service."
+Why should customer support be implemented as a microservice?,"Implementing customer support as a microservice enables scalable support ticket management, AI-assisted customer service, and automated refund workflows."
