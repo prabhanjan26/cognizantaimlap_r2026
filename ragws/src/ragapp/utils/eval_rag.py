@@ -3,21 +3,13 @@ import time
 import pandas as pd
 from dotenv import load_dotenv
 
-from langchain_community.document_loaders import TextLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from ragapp.utils.rag_engine import receive_prompt
+#pip install --upgrade "click==8.4.1" "typer==0.25.1"
+env_path = os.path.join(os.path.dirname(__file__),'..', ".env")
 
-from langchain_openai import ChatOpenAI
-from langchain_classic.chains import RetrievalQA
-from langchain_core.prompts import ChatPromptTemplate
+load_dotenv(env_path)
 
-from nlpapp.utils.rag_demo.rag_engine import ask_question
-
-
-load_dotenv()
-
-eval_df = pd.read_csv("src/nlpapp/data/eval_questions.csv")
+eval_df = pd.read_csv(os.getenv("qa_source_file_path"))
 results = []
 
 for _, row in eval_df.iterrows():
@@ -26,10 +18,10 @@ for _, row in eval_df.iterrows():
 
     start_time = time.time()
 
-    response = ask_question(question)
+    response = receive_prompt(question)
 
-    actual_answer = response["answer"]
-    retrieved_context = str(response["sources"])
+    actual_answer = response.get("answer", "")
+    retrieved_context = str(response.get("sources", ""))
 
     latency = time.time() - start_time
 
@@ -52,11 +44,7 @@ for _, row in eval_df.iterrows():
 # 11. Save Report
 # -----------------------------
 result_df = pd.DataFrame(results)
-
-result_df.to_csv(
-    "hr_rag_evaluation_report.csv",
-    index=False
-)
+result_df.to_csv("food_delivery_rag_evaluation_report.csv", index=False)
 
 
 # -----------------------------
@@ -67,7 +55,7 @@ hallucination_rate = result_df["hallucination_score"].mean() * 100
 avg_latency = result_df["latency_seconds"].mean()
 
 
-print("\nHR RAG Evaluation Report")
+print("\nFood Delivery RAG Evaluation Report")
 print("=" * 50)
 
 print(result_df[[
@@ -85,4 +73,4 @@ print(f"Accuracy           : {accuracy:.2f}%")
 print(f"Hallucination Rate : {hallucination_rate:.2f}%")
 print(f"Average Latency    : {avg_latency:.2f} seconds")
 
-print("\nReport saved as hr_rag_evaluation_report.csv")
+print("\nReport saved as food_delivery_rag_evaluation_report.csv")
