@@ -1,6 +1,11 @@
 //create api to show flight information
 const express = require('express');
 const app = express();
+//add cors and body-parser
+const cors = require('cors');
+const bodyParser = require('body-parser');
+app.use(cors());
+app.use(bodyParser.json());
 const port = 3000;
 
 app.get('/flights', (req, res) => {
