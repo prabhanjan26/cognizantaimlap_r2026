@@ -1,4 +1,5 @@
 import { useState,useEffect } from 'react';
+import './Timer.css';
 function Timer() {
   
     //initializing the state variable
@@ -13,8 +14,8 @@ function Timer() {
 }, []);
 
 return (
-    <div>
-        <h4>Current Time: {currentTime.toLocaleTimeString()}</h4>
+    <div className="timer">
+        <h4 >{currentTime.toLocaleTimeString()}</h4>
     </div>
 );
 

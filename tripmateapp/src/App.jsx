@@ -1,4 +1,5 @@
 import Logo from './Logo/Logo';
+import Timer from './Timer/Timer';
 import './App.css';
 function App() {
 
@@ -7,6 +8,7 @@ function App() {
     <section className="app">
       <Logo />
       <h1>Travel App</h1>
+      <Timer className="timer" />
     </section>
   )
 }
