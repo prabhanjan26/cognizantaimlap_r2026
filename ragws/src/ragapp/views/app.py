@@ -2,6 +2,8 @@ import streamlit as st
 #from ragapp.utils.rag_engine import receive_prompt
 import requests
 import os
+import redis
+import hashlib
 from dotenv import load_dotenv
 from ragapp.agents.delivery_support_agent import ask_food_delivery_agent
 #to run this app,
@@ -9,6 +11,19 @@ from ragapp.agents.delivery_support_agent import ask_food_delivery_agent
 #Create an order for Parameswari, product id 128, product name TV, Quantity 1, Price 50000
 env_path=os.path.join(os.path.dirname(__file__), '..','.env')
 load_dotenv(env_path)
+
+REDIS_HOST = os.getenv("redis_host")
+REDIS_PORT = int(os.getenv("redis_port"))
+
+redis_client = redis.Redis(
+    host=REDIS_HOST,
+    port=REDIS_PORT,
+    decode_responses=True
+)
+def get_cache_key(question):
+    normalized_question = question.lower().strip()
+    return "food_agent:" + hashlib.md5(normalized_question.encode()).hexdigest()
+
 API_URL = os.getenv("api_url")
 print(f"API_URL: {API_URL}")
 st.set_page_config(
@@ -134,29 +149,48 @@ if ask_clicked:
     if question.strip() == "":
         st.warning("Please enter a question")
     else:
-        with st.spinner("Calling Food Delivery Agent..."):
-            response = ask_food_delivery_agent(question)
+        cache_key = get_cache_key(question)
+
+        #st.write("Cache Key:", cache_key)
+
+        cached_answer = redis_client.get(cache_key)
+        if cached_answer:
+            answer = cached_answer
+            st.success("✅ Redis Cache Hit - Answer returned from cache")
+        else:
+            with st.spinner("Calling Food Delivery Agent..."):
+                response = ask_food_delivery_agent(question)
 
             if isinstance(response, dict):
                 answer = response.get("answer", "")
             else:
-                answer = str(response)
+                with st.spinner("Calling Food Delivery Agent..."):
+                    response = ask_food_delivery_agent(question)
 
-            st.markdown(
-                """
-                <h2 style='text-align:center;color:#15803d;'>
-                    ✅ Answer
-                </h2>
-                """,
-                unsafe_allow_html=True
-            )
+                    if isinstance(response, dict):
+                        answer = response.get("answer", "")
+                    else:
+                        answer = str(response)
 
-            st.markdown(
-                f"""
-                <div class="answer-box">
-                    {answer}
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-        
+                    # Store answer in Redis for 1 hour
+                    redis_client.setex(cache_key, 3600, answer)
+
+                    st.warning("⚠️ Redis Cache Miss - Agent called and answer cached")
+
+        st.markdown(
+            """
+            <h2 style='text-align:center;color:#15803d;'>
+                ✅ Answer
+            </h2>
+            """,
+            unsafe_allow_html=True
+        )
+
+        st.markdown(
+            f"""
+            <div class="answer-box">
+                {answer}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )

@@ -54,6 +54,7 @@ azure.identity
 langchain-openai
 langgraph
 gTTS
+redis
 
 [dev]
 pytest>=8.2

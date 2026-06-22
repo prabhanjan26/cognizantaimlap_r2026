@@ -73,7 +73,8 @@ dependencies = [
      "azure.identity",
      "langchain-openai",
       "langgraph",
-      "gTTS"
+      "gTTS",
+      "redis"
      
     
 ]
