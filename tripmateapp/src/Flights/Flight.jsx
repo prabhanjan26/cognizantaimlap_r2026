@@ -19,7 +19,7 @@ function Flight() {
             <ul>
                 {flights.map(flight => (
                     <li key={flight.id}>
-                        {flight.name} - {flight.destination}
+                        {flight.airline} - {flight.arrival} to {flight.departure} at {flight.time}
                     </li>
                 ))}
             </ul>
