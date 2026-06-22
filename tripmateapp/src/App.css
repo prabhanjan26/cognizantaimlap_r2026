@@ -185,7 +185,20 @@
 
 .app{
   width: 100%;
+  
   display: flex; 
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border: 1px solid var(--border);
+}
+
+h1{
+  font-size: 32px;
+  margin-left: 25%;
+  background: radial-gradient(circle, #007bff, #e52e71, #ff6a00 );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding: 10px 20px;
+
 }
