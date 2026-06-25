@@ -60,6 +60,7 @@ Requires-Dist: langchain-openai
 Requires-Dist: langgraph
 Requires-Dist: gTTS
 Requires-Dist: redis
+Requires-Dist: prometheus_client
 Provides-Extra: nlp
 Requires-Dist: nltk>=3.9; extra == "nlp"
 Requires-Dist: gensim>=4.3; extra == "nlp"

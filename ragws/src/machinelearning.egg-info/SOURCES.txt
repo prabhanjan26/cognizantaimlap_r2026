@@ -18,6 +18,7 @@ src/ragapp/filters/safety_filter.py
 src/ragapp/tools/__init__.py
 src/ragapp/tools/order_tool.py
 src/ragapp/utils/__init__.py
+src/ragapp/utils/code_completion.py
 src/ragapp/utils/eval_rag.py
 src/ragapp/utils/gen_mp3.py
 src/ragapp/utils/multi_modal_test.py

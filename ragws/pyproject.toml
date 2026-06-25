@@ -74,7 +74,8 @@ dependencies = [
      "langchain-openai",
       "langgraph",
       "gTTS",
-      "redis"
+      "redis",
+      "prometheus_client"
      
     
 ]

@@ -55,6 +55,7 @@ langchain-openai
 langgraph
 gTTS
 redis
+prometheus_client
 
 [dev]
 pytest>=8.2
